@@ -1,0 +1,9 @@
+- title: FIFA World Cup 2022 Knowledge Graph
+  text: Ontology-aware KG with semantic similarity and RAG-based querying
+  url: https://github.com/vlb20/FIFA_WC_2022_Knowledge_Graph
+- title: LightPrivacy
+  text: AI-powered GDPR compliance tool
+  url: https://github.com/vlb20/LightPrivacy
+- title: LLM2Query
+  text: From natural language to PyMongo queries, for e-health
+  url: https://github.com/vlb20/LLM2Query

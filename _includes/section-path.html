@@ -1,0 +1,23 @@
+<section id="path" class="path">
+  <div class="wrap">
+    {% include sec-head.html n=include.n label="Path" title="From Naples to Lugano." %}
+  </div>
+  <div class="map">
+    <div class="map-wide">{% include study-map-wide.svg %}</div>
+    <div class="map-tall">{% include study-map-tall.svg %}</div>
+    <p class="map-hint">Hover a step below, or click a campus, to link the map and the timeline.</p>
+  </div>
+  <div class="wrap">
+    <ol class="stops reveal">
+      {%- assign steps = site.data.education | reverse %}
+      {%- for e in steps %}
+      <li class="stop{% if e.current %} now{% endif %}" data-scene="{{ e.scene }}" tabindex="0">
+        <div class="when">{{ e.years }}</div>
+        <h3>{{ e.short }}</h3>
+        <div class="where">{{ e.unit }}</div>
+        {%- if e.note %}<div class="note">{{ e.note }}</div>{% endif %}
+      </li>
+      {%- endfor %}
+    </ol>
+  </div>
+</section>

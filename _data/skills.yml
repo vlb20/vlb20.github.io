@@ -1,0 +1,6 @@
+- group: Programming languages
+  items: [Python, Java, C++, SQL, MATLAB]
+- group: Data & AI
+  items: [MongoDB, Pandas, PyTorch, MySQL, Neo4j, TensorFlow, Scikit-learn, NumPy, OWL/RDF, LLMs]
+- group: Languages
+  items: [Italian (native), English (B2)]

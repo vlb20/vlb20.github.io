@@ -1,0 +1,19 @@
+<section id="publications">
+  <div class="wrap">
+    {% include sec-head.html n=include.n label="Publications" title="Papers." %}
+    <div class="sec-body reveal">
+      <ol class="pubs">
+        {%- for p in site.data.publications %}
+        <li>
+          <div class="pub-year">{{ p.year }}</div>
+          <div>
+            <div class="t">{{ p.title }}</div>
+            <div class="s">{{ p.authors | replace: "V. L. Bruno", "<strong>V. L. Bruno</strong>" }}</div>
+            <div class="m">{{ p.venue }}{% for l in p.links %} · <a href="{{ l.url | relative_url }}">{{ l.label }} ↗</a>{% endfor %}</div>
+          </div>
+        </li>
+        {%- endfor %}
+      </ol>
+    </div>
+  </div>
+</section>

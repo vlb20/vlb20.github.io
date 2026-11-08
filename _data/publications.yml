@@ -1,0 +1,10 @@
+# Publications, newest first. The section stays hidden while this list is empty. Example:
+#
+# - title: "Paper title"
+#   authors: "V. L. Bruno, R. Tufano, G. Bavota"
+#   venue: "ICSE 2027"
+#   year: 2027
+#   links:
+#     - { label: PDF, url: /files/paper.pdf }
+#     - { label: DOI, url: https://doi.org/... }
+[]

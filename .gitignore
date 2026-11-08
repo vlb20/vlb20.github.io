@@ -21,3 +21,8 @@ package-lock.json
 
 # Ignore files created by MacOS
 .DS_Store
+
+# Intermediate files of the map generator
+tools/iso-map/*.frag
+tools/iso-map/*.json
+__pycache__/
