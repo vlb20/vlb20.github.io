@@ -1,0 +1,43 @@
+# Newest first. Used by the "Path" section on the home page and by the CV.
+# `scene` links an entry to the map: naples | lugano.
+- degree: PhD in Informatics
+  short: PhD in Informatics
+  institution: Università della Svizzera italiana (USI)
+  unit: SEART · Software Institute, USI
+  place: Lugano, CH
+  start: Jun 2026
+  end: Present
+  years: 2026 — now
+  scene: lugano
+  current: true
+  note: AI for Software Engineering
+  details:
+    - "Supervisor: Prof. Gabriele Bavota · Co-supervisor: Dr. Rosalia Tufano"
+
+- degree: Master's Degree in Computer Engineering
+  short: MSc Computer Engineering
+  institution: University of Naples Federico II
+  unit: University of Naples Federico II
+  place: Naples, IT
+  start: Dec 2023
+  end: Apr 2026
+  years: 2023 — 2026
+  scene: naples
+  note: 110/110 cum laude · ontology-driven hazard scenario generation in automated driving systems
+  details:
+    - "Final grade: **110/110 with honors** (GPA 29.8/30)"
+    - "Thesis in AI Systems Engineering: *An Ontology-Driven Framework for Abductive Generation of Novel Hazard Scenarios*"
+
+- degree: Bachelor's Degree in Computer Engineering
+  short: BSc Computer Engineering
+  institution: University of Naples Federico II
+  unit: University of Naples Federico II
+  place: Naples, IT
+  start: Sep 2020
+  end: Dec 2023
+  years: 2020 — 2023
+  scene: naples
+  note: "Thesis: adversarial attacks on deep learning for medical imaging"
+  details:
+    - "Final grade: **105/110**"
+    - "Thesis in Artificial Intelligence: *Adversarial Attacks on Deep Learning Systems for Medical Imaging*"

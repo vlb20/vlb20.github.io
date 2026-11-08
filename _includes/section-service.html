@@ -1,0 +1,20 @@
+<section id="service">
+  <div class="wrap">
+    {% include sec-head.html n=include.n label="Service" title="Academic service." %}
+    <div class="sec-body reveal">
+      <div class="split">
+        {%- assign groups = site.data.service | group_by: "type" %}
+        {%- for g in groups %}
+        <div>
+          <p class="col-title">{{ g.name }}</p>
+          <ul class="list">
+            {%- for x in g.items %}
+            <li><div class="t">{% if x.url %}<a href="{{ x.url }}">{{ x.what }}</a>{% else %}{{ x.what }}{% endif %}</div><div class="m">{{ x.date }}</div></li>
+            {%- endfor %}
+          </ul>
+        </div>
+        {%- endfor %}
+      </div>
+    </div>
+  </div>
+</section>

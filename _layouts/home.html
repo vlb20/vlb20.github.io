@@ -1,0 +1,31 @@
+---
+layout: default
+---
+<div class="hero">
+  <div class="wrap">
+    <div>
+      <div class="kicker">{{ site.author.role }}</div>
+      <h1>{{ page.name_first }}<br>{{ page.name_last }}<em>.</em></h1>
+      <p class="lede">{{ page.lede }}</p>
+      {% include contact-links.html email=true %}
+      <div class="dim" aria-hidden="true"><span>Naples 2020</span><i></i><span>Lugano 2026 →</span></div>
+    </div>
+    <figure class="portrait">
+      <div class="frame"><img src="{{ '/images/profile.jpg' | relative_url }}" alt="Portrait of {{ site.author.name }}" width="360" height="360"></div>
+      <span class="tick tl"></span><span class="tick br"></span>
+    </figure>
+  </div>
+</div>
+
+{%- include section-list.html -%}
+{%- for s in sections -%}
+  {%- assign n = forloop.index -%}
+  {%- case s -%}
+    {%- when "about" -%}{% include section-about.html n=n body=content %}
+    {%- when "path" -%}{% include section-path.html n=n %}
+    {%- when "publications" -%}{% include section-publications.html n=n %}
+    {%- when "teaching" -%}{% include section-teaching.html n=n %}
+    {%- when "service" -%}{% include section-service.html n=n %}
+    {%- when "work" -%}{% include section-work.html n=n %}
+  {%- endcase -%}
+{%- endfor -%}

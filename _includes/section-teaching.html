@@ -1,0 +1,19 @@
+<section id="teaching">
+  <div class="wrap">
+    {% include sec-head.html n=include.n label="Teaching" title="Teaching." %}
+    <div class="sec-body reveal">
+      <div class="cards">
+        {%- for t in site.data.teaching %}
+        <article class="card{% if forloop.first %} teach{% endif %}">
+          <div class="row"><h3>{{ t.course }}</h3><span class="meta">{{ t.semester }}</span></div>
+          <p class="role">{{ t.role }} · {{ t.program }}</p>
+          {%- if t.topics %}
+          <ul class="tags" aria-label="Topics">{% for x in t.topics %}<li>{{ x }}</li>{% endfor %}</ul>
+          {%- endif %}
+          {%- if t.url %}<div class="more"><a href="{{ t.url }}">Course page ↗</a></div>{% endif %}
+        </article>
+        {%- endfor %}
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,17 @@
+<section id="about" class="about">
+  <div class="wrap">
+    {% include sec-head.html n=include.n label="About" title="Research, briefly." %}
+    <div class="sec-body reveal">
+      <div>
+        <div class="prose">{{ include.body }}</div>
+        {%- if site.data.news.size > 0 %}
+        <ul class="news" aria-label="News">
+          {%- for item in site.data.news %}
+          <li><time>{{ item.date }}</time><span>{{ item.text | markdownify | remove: '<p>' | remove: '</p>' | strip }}</span></li>
+          {%- endfor %}
+        </ul>
+        {%- endif %}
+      </div>
+    </div>
+  </div>
+</section>

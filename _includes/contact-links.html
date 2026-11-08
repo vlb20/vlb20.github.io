@@ -1,0 +1,8 @@
+<div class="links">
+  {%- if include.email %}
+  <a class="btn primary" href="mailto:{{ site.author.email }}">{{ site.author.email }}</a>
+  {%- endif %}
+  <a class="btn" href="https://github.com/{{ site.author.github }}" rel="me">GitHub ↗</a>
+  <a class="btn" href="https://www.linkedin.com/in/{{ site.author.linkedin }}" rel="me">LinkedIn ↗</a>
+  <a class="btn" href="{{ '/files/cv.pdf' | relative_url }}">CV · PDF</a>
+</div>

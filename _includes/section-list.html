@@ -1,0 +1,6 @@
+{%- comment -%} Home page sections, in order. Optional ones appear only when their data file has entries. {%- endcomment -%}
+{%- assign sections = "about,path" | split: "," -%}
+{%- if site.data.publications.size > 0 -%}{%- assign sections = sections | push: "publications" -%}{%- endif -%}
+{%- if site.data.teaching.size > 0 -%}{%- assign sections = sections | push: "teaching" -%}{%- endif -%}
+{%- if site.data.service.size > 0 -%}{%- assign sections = sections | push: "service" -%}{%- endif -%}
+{%- assign sections = sections | push: "work" -%}

@@ -1,0 +1,123 @@
+---
+layout: default
+title: CV
+permalink: /cv/
+description: Curriculum vitae of Vincenzo Luigi Bruno, PhD student at the Software Institute, USI Lugano.
+redirect_from:
+  - /resume/
+  - /cv-json/
+---
+<div class="page-head">
+  <div class="wrap">
+    <div class="kicker">Curriculum vitae</div>
+    <h1>{{ site.author.name }}</h1>
+    <p class="lede">{{ site.author.role }} · <a href="mailto:{{ site.author.email }}">{{ site.author.email }}</a></p>
+    <div class="links"><a class="btn primary" href="{{ '/files/cv.pdf' | relative_url }}" download>Download PDF ↓</a></div>
+  </div>
+</div>
+
+<div class="wrap cv">
+
+  <section class="cv-sec">
+    <h2 class="cv-h">Education</h2>
+    <div class="cv-items">
+      {%- for e in site.data.education %}
+      <article class="cv-item">
+        <div class="cv-when">{{ e.start }} – {{ e.end }}<br><span>{{ e.place }}</span></div>
+        <div>
+          <h3>{{ e.institution }}</h3>
+          <div class="cv-sub">{{ e.degree }}{% if e.current %} · {{ e.unit }}{% endif %}</div>
+          {%- if e.details %}<ul>{% for d in e.details %}<li>{{ d | markdownify | remove: '<p>' | remove: '</p>' | strip }}</li>{% endfor %}</ul>{% endif %}
+        </div>
+      </article>
+      {%- endfor %}
+    </div>
+  </section>
+
+  {%- if site.data.publications.size > 0 %}
+  <section class="cv-sec">
+    <h2 class="cv-h">Publications</h2>
+    <div class="cv-items">
+      {%- for p in site.data.publications %}
+      <article class="cv-item">
+        <div class="cv-when">{{ p.year }}</div>
+        <div><h3>{{ p.title }}</h3><div class="cv-sub">{{ p.authors | replace: "V. L. Bruno", "<strong>V. L. Bruno</strong>" }} · {{ p.venue }}</div></div>
+      </article>
+      {%- endfor %}
+    </div>
+  </section>
+  {%- endif %}
+
+  <section class="cv-sec">
+    <h2 class="cv-h">Teaching</h2>
+    <div class="cv-items">
+      {%- for t in site.data.teaching %}
+      <article class="cv-item">
+        <div class="cv-when">{{ t.semester }}</div>
+        <div><h3>{{ t.course }}</h3><div class="cv-sub">{{ t.role }} · {{ t.program }}</div>
+          {%- if t.topics %}<ul class="tags">{% for x in t.topics %}<li>{{ x }}</li>{% endfor %}</ul>{% endif %}</div>
+      </article>
+      {%- endfor %}
+    </div>
+  </section>
+
+  {%- if site.data.service.size > 0 %}
+  <section class="cv-sec">
+    <h2 class="cv-h">Service</h2>
+    <div class="cv-items">
+      {%- for x in site.data.service %}
+      <article class="cv-item"><div class="cv-when">{{ x.date }}</div><div><h3>{{ x.what }}</h3><div class="cv-sub">{{ x.type }}</div></div></article>
+      {%- endfor %}
+    </div>
+  </section>
+  {%- endif %}
+
+  <section class="cv-sec">
+    <h2 class="cv-h">Experience</h2>
+    <div class="cv-items">
+      {%- for x in site.data.experience %}
+      <article class="cv-item">
+        <div class="cv-when">{{ x.start }} – {{ x.end }}<br><span>{{ x.place }}</span></div>
+        <div><h3>{{ x.role }}</h3><div class="cv-sub">{{ x.org }}</div><p>{{ x.text }}</p></div>
+      </article>
+      {%- endfor %}
+    </div>
+  </section>
+
+  <section class="cv-sec">
+    <h2 class="cv-h">Awards</h2>
+    <div class="cv-items">
+      {%- for a in site.data.awards %}
+      <article class="cv-item">
+        <div class="cv-when">{{ a.date }}</div>
+        <div><h3>{{ a.title }}</h3><div class="cv-sub">{{ a.by }}{% if a.link %} · <a href="{{ a.link.url }}">{{ a.link.label }} ↗</a>{% endif %}</div></div>
+      </article>
+      {%- endfor %}
+    </div>
+  </section>
+
+  <section class="cv-sec">
+    <h2 class="cv-h">Projects</h2>
+    <div class="cv-items">
+      {%- for p in site.data.projects %}
+      <article class="cv-item">
+        <div class="cv-when"><a href="{{ p.url }}">GitHub ↗</a></div>
+        <div><h3>{{ p.title }}</h3><div class="cv-sub">{{ p.text }}</div></div>
+      </article>
+      {%- endfor %}
+    </div>
+  </section>
+
+  <section class="cv-sec">
+    <h2 class="cv-h">Skills</h2>
+    <div class="cv-items">
+      {%- for g in site.data.skills %}
+      <article class="cv-item">
+        <div class="cv-when">{{ g.group }}</div>
+        <div><ul class="tags">{% for x in g.items %}<li>{{ x }}</li>{% endfor %}</ul></div>
+      </article>
+      {%- endfor %}
+    </div>
+  </section>
+
+</div>

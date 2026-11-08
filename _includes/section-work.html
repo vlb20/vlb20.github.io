@@ -1,0 +1,26 @@
+<section id="work">
+  <div class="wrap">
+    {% include sec-head.html n=include.n label="Work" title="Awards &amp; projects." %}
+    <div class="sec-body reveal">
+      <div class="split">
+        <div>
+          <p class="col-title">Awards</p>
+          <ul class="list">
+            {%- for a in site.data.awards %}
+            <li><div class="t">{{ a.title }}</div><div class="s">{{ a.by }}</div><div class="m">{{ a.date }}{% if a.link %} · <a href="{{ a.link.url }}">{{ a.link.label }} ↗</a>{% endif %}</div></li>
+            {%- endfor %}
+          </ul>
+        </div>
+        <div>
+          <p class="col-title">Selected projects</p>
+          <ul class="list">
+            {%- for p in site.data.projects %}
+            <li><div class="t">{{ p.title }}</div><div class="s">{{ p.text }}</div><div class="m"><a href="{{ p.url }}">github ↗</a></div></li>
+            {%- endfor %}
+          </ul>
+          <p class="m more-gh"><a href="https://github.com/{{ site.author.github }}">All projects on GitHub ↗</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
