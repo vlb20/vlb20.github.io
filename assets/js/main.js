@@ -13,6 +13,37 @@
     try { localStorage.setItem('theme', next); } catch (e) {}
   });
 
+  /* navbar: mobile menu */
+  var header = document.querySelector('.site-header');
+  var menuBtn = document.querySelector('.menu-btn');
+  var setMenu = function (open) {
+    if (!header || !menuBtn) return;
+    header.classList.toggle('is-open', open);
+    document.body.classList.toggle('menu-open', open);
+    menuBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    menuBtn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+  };
+  if (menuBtn) menuBtn.addEventListener('click', function () { setMenu(!header.classList.contains('is-open')); });
+  document.querySelectorAll('.nav-link').forEach(function (a) { a.addEventListener('click', function () { setMenu(false); }); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') setMenu(false); });
+  window.matchMedia('(min-width: 861px)').addEventListener('change', function (e) { if (e.matches) setMenu(false); });
+
+  /* navbar: highlight the section in view */
+  var links = document.querySelectorAll('.nav-link[data-section]');
+  if (links.length && 'IntersectionObserver' in window) {
+    var spy = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        links.forEach(function (l) { l.classList.toggle('is-active', l.dataset.section === e.target.id); });
+      });
+    }, { rootMargin: '-45% 0px -50% 0px' });
+    links.forEach(function (l) { var s = document.getElementById(l.dataset.section); if (s) spy.observe(s); });
+    var hero = document.querySelector('.hero');
+    if (hero) new IntersectionObserver(function (es) {
+      if (es[0].isIntersecting) links.forEach(function (l) { l.classList.remove('is-active'); });
+    }, { rootMargin: '-45% 0px -50% 0px' }).observe(hero);
+  }
+
   /* reveal sections and start the map drawing when they scroll into view */
   var maps = document.querySelectorAll('svg.study-map[data-scroll]');
   var reveals = document.querySelectorAll('.reveal');
