@@ -6,8 +6,25 @@
     <div class="map-wide">{% include study-map-wide.svg %}</div>
     <div class="map-tall">{% include study-map-tall.svg %}</div>
     <p class="map-hint">Hover a step below, or click a campus, to link the map and the timeline.</p>
+    {%- assign egg = site.data.napoli %}
+    <div class="egg egg-card" role="region" aria-label="Easter egg" aria-live="polite">
+      <button class="egg-close" type="button" aria-label="Close">×</button>
+      {%- if egg.photo %}<img src="{{ egg.photo | relative_url }}" alt="{{ egg.photo_alt }}" loading="lazy">{% endif %}
+      <div>
+        <p class="kicker">You found it</p>
+        <h3>{{ egg.title }}</h3>
+        <p>{{ egg.text }}</p>
+      </div>
+    </div>
   </div>
   <div class="wrap">
+    {%- assign pro = site.data.napoli.scudetti | where: "stop", "prologue" %}
+    {%- if pro.size > 0 %}
+    <div class="egg egg-prologue">
+      <span class="when">Before my time</span>
+      {%- for x in pro %}{% capture sid %}pro-{{ forloop.index }}{% endcapture %}{% include scudetto.html season=x.season id=sid %}{% endfor %}
+    </div>
+    {%- endif %}
     <ol class="stops reveal">
       {%- assign steps = site.data.education | reverse %}
       {%- for e in steps %}
@@ -16,6 +33,8 @@
         <h3>{{ e.short }}</h3>
         <div class="where">{{ e.unit }}</div>
         {%- if e.note %}<div class="note">{{ e.note }}</div>{% endif %}
+        {%- assign here = site.data.napoli.scudetti | where: "stop", e.short %}
+        {%- for x in here %}{% capture sid %}{{ e.short | slugify }}-{{ forloop.index }}{% endcapture %}<div class="egg egg-badge">{% include scudetto.html season=x.season id=sid %}</div>{% endfor %}
       </li>
       {%- endfor %}
     </ol>

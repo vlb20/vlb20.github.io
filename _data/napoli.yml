@@ -1,0 +1,16 @@
+# Easter egg: click the stadium on the map.
+# `stop` places a scudetto inside a Path step (matches `short` in education.yml);
+# "prologue" puts it before the timeline.
+title: Forza Napoli.
+text: Four scudetti. Two of them arrived while I was studying right across Via Claudio from the stadium.
+photo:          # optional, e.g. /images/napoli.jpg
+photo_alt:
+scudetti:
+  - season: 1986–87
+    stop: prologue
+  - season: 1989–90
+    stop: prologue
+  - season: 2022–23
+    stop: BSc Computer Engineering
+  - season: 2024–25
+    stop: MSc Computer Engineering

@@ -63,6 +63,18 @@ def north(pair, at, k=1.0):
     return o
 
 
+def scalebar(pair, k=1.0, label="50 m"):
+    (x0, y0), (x1, y1) = pair
+    dx, dy = x1 - x0, y1 - y0
+    L = math.hypot(dx, dy)
+    nx, ny = -dy / L * 4 * k, dx / L * 4 * k
+    o = f'<line class="lead" x1="{x0:.1f}" y1="{y0:.1f}" x2="{x1:.1f}" y2="{y1:.1f}"/>'
+    for (x, y) in ((x0, y0), (x1, y1)):
+        o += f'<line class="lead" x1="{x - nx:.1f}" y1="{y - ny:.1f}" x2="{x + nx:.1f}" y2="{y + ny:.1f}"/>'
+    o += f'<text class="sub" x="{(x0 + x1) / 2:.1f}" y="{max(y0, y1) + 16 * k:.1f}" text-anchor="middle">{label}</text>'
+    return o
+
+
 def style(k, tag):
     """k scales strokes and type, so the tall (mobile) layout stays legible once shrunk."""
     sw = lambda v: f"{v * k:.2f}"
@@ -145,18 +157,20 @@ def svg_doc(tag, W, H, k, head, route, nt, lt, nlabels, llabels, scroll=True, si
 def wide(size=False, scroll=True):
     W, H, k = 1600, 820, 1.0
     nt = place(b["nap"], 480, 190)
-    lt = place(b["lug"], 1262, 215)
+    lt = place(b["lug"], 1262, 300)
     nd, ng, ns, nc = (T(A[n], nt) for n in ("dieti", "gate", "stadium", "claudio"))
     lu, lr, lsn = (T(A[n], lt) for n in ("usi", "river", "santa"))
     nl = (callout(nd, (190, 705), "DIETI", "Electrical Engineering &amp; IT", "end", True)
           + callout(ng, (320, 765), "Main gate", "Via Claudio 21", "start", True)
           + callout(ns, (ns[0] + 70, 215), "Diego Armando Maradona Stadium")
           + f'<text class="sub" x="{nc[0] + 10:.1f}" y="{nc[1] + 26:.1f}" text-anchor="middle">Via Claudio</text>'
-          + north([T(p, nt) for p in A["nnorth"]], (80, 215)))
-    ll = (callout(lu, (1380, 680), "Campus Est", "Software Institute", "start", True)
-          + callout(lr, (lr[0] - 50, lr[1] + 95), "Cassarate river", None, "end")
-          + f'<text class="sub" x="{lsn[0] - 95:.1f}" y="{lsn[1] + 12:.1f}" text-anchor="middle">Via la Santa</text>'
-          + north([T(p, lt) for p in A["lnorth"]], (1530, 215)))
+          + north([T(p, nt) for p in A["nnorth"]], (80, 215))
+          + scalebar([T(p, nt) for p in A["nscale"]]))
+    ll = (callout(lu, (lu[0] + 90, lu[1] + 175), "Campus Est · Sector C", "Software Institute", "start", True)
+          + callout(lr, (lr[0] - 40, lr[1] + 110), "Cassarate river", None, "end")
+          + f'<text class="sub" x="{lsn[0] + 75:.1f}" y="{lsn[1] + 26:.1f}" text-anchor="middle">Via la Santa</text>'
+          + north([T(p, lt) for p in A["lnorth"]], (1530, 300))
+          + scalebar([T(p, lt) for p in A["lscale"]]))
     head = (heading(60, 70, "01 — NAPLES, ITALY", "University of Naples Federico II", "School of Engineering · Fuorigrotta", "start", k)
             + heading(W - 60, 70, "02 — LUGANO, SWITZERLAND", "Università della Svizzera italiana", "Campus Est · Lugano-Viganello", "end", k))
     route = ('<path class="lead dash" d="M 700 95 C 760 40, 840 40, 900 95"/>'
@@ -170,15 +184,17 @@ def tall():
     nt = place(b["nap"], W / 2 + 40, 300)
     nbot = nt[1] + b["nap"][3]
     lhead_y = nbot + 330
-    lt = place(b["lug"], W / 2 + 20, lhead_y + 210)
+    lt = place(b["lug"], W / 2 + 40, lhead_y + 150)
     H = int(lt[1] + b["lug"][3] + 260)
     nd, ng, ns = (T(A[n], nt) for n in ("dieti", "gate", "stadium"))
     lu, lr = (T(A[n], lt) for n in ("usi", "river"))
     nl = (callout(nd, (70, nbot + 70), "DIETI", None, "start", True, k)
           + callout(ng, (ng[0] + 140, nbot + 150), "Main gate", None, "start", True, k)
-          + callout(ns, (ns[0] + 110, 250), "Maradona Stadium", None, "start", False, k))
-    ll = (callout(lu, (lu[0] + 90, lt[1] + b["lug"][3] + 150), "Campus Est", "Software Institute", "start", True, k)
-          + callout(lr, (60, lr[1] + 150), "Cassarate", None, "start", False, k))
+          + callout(ns, (ns[0] + 110, 250), "Maradona Stadium", None, "start", False, k)
+          + scalebar([T(p, nt) for p in A["nscale"]], k))
+    ll = (callout(lu, (lu[0] + 90, lt[1] + b["lug"][3] + 110), "Campus Est · C", "Software Institute", "start", True, k)
+          + callout(lr, (60, lr[1] + 150), "Cassarate", None, "start", False, k)
+          + scalebar([T(p, lt) for p in A["lscale"]], k))
     head = (heading(40, 70, "01 — NAPLES, ITALY", "Federico II", "Via Claudio · Fuorigrotta", "start", k)
             + heading(40, lhead_y, "02 — LUGANO, SWITZERLAND", "USI Campus Est", "Lugano-Viganello", "start", k))
     x = W - 90

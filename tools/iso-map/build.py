@@ -4,7 +4,8 @@ from iso import *
 # ---------------------------------------------------------------- NAPLES
 # local metres: x = east, y = south. Viewer from the south-west.
 W = 400
-na = Scene(1.4, lambda x, y: (y, W - x))
+SCALE = 1.4  # px per metre, shared by both scenes
+na = Scene(SCALE, lambda x, y: (y, W - x))
 N = []  # sorted items
 FL = 3.5
 
@@ -102,11 +103,11 @@ def stadium():
     # pitch 68 x 105, long axis north-south
     pw, pl = 34, 52.5
     P = lambda x, y: sc.P(cx + x, cy + y, 1.2)
-    o.append(sc.poly([P(-pw, -pl), P(pw, -pl), P(pw, pl), P(-pw, pl)], "o d a"))
-    o.append(sc.line(P(-pw, 0), P(pw, 0), "d a"))
-    o.append(sc.poly([P(9.15 * math.cos(t / 12 * math.pi), 9.15 * math.sin(t / 12 * math.pi)) for t in range(24)], "o d a"))
+    o.append(sc.poly([P(-pw, -pl), P(pw, -pl), P(pw, pl), P(-pw, pl)], "o d s pitch"))
+    o.append(sc.line(P(-pw, 0), P(pw, 0), "d s pitch"))
+    o.append(sc.poly([P(9.15 * math.cos(t / 12 * math.pi), 9.15 * math.sin(t / 12 * math.pi)) for t in range(24)], "o d s pitch"))
     for s in (-1, 1):
-        o.append(sc.pline([P(-20.15, s * pl), P(-20.15, s * (pl - 16.5)), P(20.15, s * (pl - 16.5)), P(20.15, s * pl)], "o d a"))
+        o.append(sc.pline([P(-20.15, s * pl), P(-20.15, s * (pl - 16.5)), P(20.15, s * (pl - 16.5)), P(20.15, s * pl)], "o d s pitch"))
     # outer wall (visible half) with steel frames
     n = 120
     H = 30
@@ -154,12 +155,12 @@ def stadium():
 
 # ---------------------------------------------------------------- LUGANO
 # local metres: x = east, y = south. Viewer from the south-east.
-lu = Scene(2.3, lambda x, y: (x, y))
+lu = Scene(SCALE, lambda x, y: (x, y))
 L = []
 FLL = 3.3
 
 
-def LP(foot, h, tone=ACC, floors=None, mull=3.2, roof=None):
+def LP(foot, h, tone=INK, floors=None, mull=3.2, roof=None):
     f = floors if floors is not None else max(1, round(h / FLL))
     L.append(prism(lu, foot, 0, h, tone, f, mull, roof))
 
@@ -168,12 +169,12 @@ def rect(x0, x1, y0, y1):
     return [(x0, y0), (x1, y0), (x1, y1), (x0, y1)]
 
 
-def lroof(x0, x1, y0, y1, z):
-    return prism(lu, rect(x0, x1, y0, y1), z, 2.4, ACC).fn
+def lroof(x0, x1, y0, y1, z, tone=INK):
+    return prism(lu, rect(x0, x1, y0, y1), z, 2.4, tone).fn
 
 
-def terrace(pts, z):
-    return prism(lu, pts, z, 1.2, ACC).fn
+def terrace(pts, z, tone=INK):
+    return prism(lu, pts, z, 1.2, tone).fn
 
 
 ne = [(56, 0), (86.5, 0), (92, 35), (56, 35)]
@@ -184,11 +185,12 @@ LP(rect(70, 90.5, 35, 59.5), 11, roof=terrace([(74, 42), (82, 39), (86, 46), (80
 LP(rect(2, 22, 71, 94), 11, roof=terrace([(6, 78), (13, 75), (18, 81), (13, 88), (7, 85)], 11))
 LP(rect(39, 62, 99.5, 124.5), 11, roof=terrace([(44, 105), (52, 103), (56, 110), (50, 117), (45, 113)], 11))
 # trapezoid blocks with PV roofs
-LP(ne, 15, roof=solar(lu, ne, 15, 2.9, 2.5, ACC))
-LP(sw, 15, roof=solar(lu, sw, 15, 2.9, 2.5, ACC))
+LP(ne, 15, roof=solar(lu, ne, 15, 2.9, 2.5, INK))
+LP(sw, 15, roof=solar(lu, sw, 15, 2.9, 2.5, INK))
 # tall slabs
 LP(rect(3, 30, 5, 71), 26, roof=lroof(9, 24, 14, 62, 26))
-LP(rect(62, 90, 59.5, 126), 26, roof=lroof(68, 84, 68, 117, 26))
+# Sector C (Software Institute)
+LP(rect(62, 90, 59.5, 126), 26, ACC, roof=lroof(68, 84, 68, 117, 26, ACC))
 # courtyard trees
 for x, y in ((42, 43.7), (52.7, 45.4), (56.6, 62.2), (37, 67.7), (39.2, 76), (48, 88)):
     L.append(tree(lu, x, y, 2.6, 7.5))
@@ -233,7 +235,7 @@ def render(sc, ground, items, pre="", base=0.0, step=0.035):
     sc.out = [f'<g class="anim" style="--d:{base:.2f}s">' + ground() + '</g>']
     t = base + 0.35
     if pre:
-        sc.out.append(f'<g class="anim slow" style="--d:{t:.2f}s">' + pre() + '</g>')
+        sc.out.append(f'<g class="anim slow stadium" style="--d:{t:.2f}s" tabindex="0" role="button" aria-label="Diego Armando Maradona Stadium">' + pre() + '</g>')
         t += 0.5
     for it in depth_sort(items):
         sc.out.append(f'<g class="anim" style="--d:{t:.2f}s">' + it.fn() + '</g>')
@@ -264,6 +266,9 @@ anchors = {
     "claudio": na.P(119, 440, 0),
     "nnorth": (na.P(30, 120, 0), na.P(30, 100, 0)),
     "usi": lu.P(76, 92, 26),
+    # 50 m scale bars, along each scene's east-west axis
+    "nscale": (na.P(150, 452, 0), na.P(200, 452, 0)),
+    "lscale": (lu.P(62, 163, 0), lu.P(112, 163, 0)),
     "usiw": lu.P(16, 38, 26),
     "river": lu.P(-26, 120, 0),
     "santa": lu.P(100, 151.5, 0),
