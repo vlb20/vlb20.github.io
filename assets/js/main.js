@@ -76,6 +76,17 @@
     s.addEventListener('focus', function () { focus(s.dataset.scene); });
     s.addEventListener('blur', function () { focus(null); });
   });
+  /* easter egg: the stadium */
+  var setEgg = function (on) { path.classList.toggle('egg-on', on); };
+  path.querySelectorAll('.study-map .stadium').forEach(function (st) {
+    var hit = function (ev) { ev.stopPropagation(); ev.preventDefault(); setEgg(!path.classList.contains('egg-on')); };
+    st.addEventListener('click', hit);
+    st.addEventListener('keydown', function (ev) { if (ev.key === 'Enter' || ev.key === ' ') hit(ev); });
+  });
+  var close = path.querySelector('.egg-close');
+  if (close) close.addEventListener('click', function () { setEgg(false); });
+  document.addEventListener('keydown', function (ev) { if (ev.key === 'Escape') setEgg(false); });
+
   path.querySelectorAll('.study-map .scene').forEach(function (g) {
     g.addEventListener('click', function (ev) {
       ev.stopPropagation();
